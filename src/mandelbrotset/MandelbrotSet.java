@@ -28,10 +28,11 @@ class MandelbrotSet {
         //****************
         Color color;
         
-        int repititions = 40;
+        int repititions = 500;
+        int repMin;
 
-        double xoff = -0.74133;
-        double yoff = -0.23505;
+        double xoff = -0.74132652;
+        double yoff = -0.23506;
         double scale = 1;
 
         double ImMin = -(2/scale)+yoff;
@@ -39,10 +40,11 @@ class MandelbrotSet {
         double ReMin = -(2/scale)+xoff;
         double ReMax = (2/scale) +xoff;
 
-        int width = 1280;
-        int height = 720;
+        int width = 480;
+        int height = 480;
         double stepRe = (ReMax - ReMin)/width;
         double stepIm = (ImMax - ImMin)/height;
+        int rep = 0;
 
         BufferedImage image = new BufferedImage(width, height+1, BufferedImage.TYPE_INT_RGB);
 while(xoff <3){
@@ -56,11 +58,15 @@ while(xoff <3){
                     z = Complex.multiply(z, z);
                     z = Complex.add(z, num);
                     if (i > 2 && z.magnitude() < 2) {
-                        color = new Color((int)((Math.sin(i)+1)*255)/(1+i),(int)((Math.cos(i+Math.PI/2)+1)*255)/(1+i),(int)((Math.cos(i)+1)*255)/(1+i));
-                        image.setRGB((int)((Re-ReMin)/(ReMax-ReMin)*width), (int)((Im-ImMin)/(ImMax-ImMin)*height), color.getRGB() );//work in progress
+                        rep = i;
                     }
                 }
-
+                if (rep > 2){
+                color = new Color((int)(((Math.sin(rep)+1)*255)/2)/(1+rep/8),(int)(((Math.cos(rep+Math.PI/2)+1)*255)/2)/(1+rep/8),(int)(((Math.cos(rep)+1)*255)/2)/(1+rep/8));
+                image.setRGB((int)((Re-ReMin)/(ReMax-ReMin)*width), (int)((Im-ImMin)/(ImMax-ImMin)*height), color.getRGB() );//work in progress
+                }
+                rep = 0;
+                
                 /*else{
                     System.out.print(" ");
                 }*/

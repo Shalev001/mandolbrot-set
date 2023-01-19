@@ -17,6 +17,12 @@ class MandelbrotSet {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
+        
+        //The panel to display it on
+        MainFrameUI theFrame;
+        
+        //Make the frame
+        theFrame = new MainFrameUI();
 
         //****************
         double step = 0.00208;

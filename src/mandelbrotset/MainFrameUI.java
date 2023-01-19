@@ -5,6 +5,8 @@
  */
 package mandelbrotset;
 
+import java.awt.image.BufferedImage;
+
 /**
  *
  * @author Tacitor
@@ -25,7 +27,7 @@ public class MainFrameUI extends javax.swing.JFrame {
         this.setSize(1280, 720);
         this.setUndecorated(false); //make sure it has min, max, and close buttons
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+
         //centre it on screen
         this.setLocationRelativeTo(null);
 
@@ -35,6 +37,15 @@ public class MainFrameUI extends javax.swing.JFrame {
         
         this.setVisible(true);
         
+    }
+
+    /**
+     * Pass over the image of the Mandelbrot Set to the JPanel
+     *
+     * @param image
+     */
+    public void setMandelSetImage(BufferedImage image) {
+        mainPanel.setMandelSetImage(image);
     }
     
 }

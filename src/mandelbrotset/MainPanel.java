@@ -6,6 +6,7 @@
 package mandelbrotset;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -27,6 +28,8 @@ public class MainPanel extends javax.swing.JPanel {
      * @param m
      */
     public MainPanel(MainFrameUI m) {
+        
+        setImage = null;
 
         mainFrameUI = m;
 
@@ -54,9 +57,32 @@ public class MainPanel extends javax.swing.JPanel {
         //stop using Graphics. Get G2D
 
         Graphics2D g2d = (Graphics2D) g;
-        
+
         g2d.setColor(Color.red);
-        g2d.drawRect(100, 100, 100, 100);
+        
+        g2d.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        g2d.drawString("IF you are seeing this message please wait for the image to generate...", 
+                50, 50);
+
+        //draw the image
+        g2d.drawImage(setImage,
+                0,
+                0,
+                this
+        );
+        
+        System.out.println("Done");
+    }
+
+    /**
+     * Update the image of the Mandelbrot Set
+     *
+     * @param image
+     */
+    public void setMandelSetImage(BufferedImage image) {
+        setImage = image;
+        System.out.println("Update");
+        repaint();
     }
 
 }

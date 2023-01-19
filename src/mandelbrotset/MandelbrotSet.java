@@ -25,8 +25,8 @@ class MandelbrotSet {
         theFrame = new MainFrameUI();
 
         //****************
-        double step = 0.00208;
-        int repititions = 1000;
+        double step = 0.002;
+        int repititions = 10;
 
         double xoff;
         double yoff;
@@ -60,6 +60,9 @@ class MandelbrotSet {
             }
             //System.out.println("");
         }
+        
+        //Now that the image has been made pass it over to the panel
+        theFrame.setMandelSetImage(image);
 
         File file = new File("mandelbrot3.png");
 

@@ -71,7 +71,6 @@ public class MainPanel extends javax.swing.JPanel {
                 this
         );
         
-        System.out.println("Done");
     }
 
     /**
@@ -81,7 +80,6 @@ public class MainPanel extends javax.swing.JPanel {
      */
     public void setMandelSetImage(BufferedImage image) {
         setImage = image;
-        System.out.println("Update");
         repaint();
     }
 

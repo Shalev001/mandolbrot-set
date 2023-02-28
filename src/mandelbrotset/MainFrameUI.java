@@ -24,7 +24,7 @@ public class MainFrameUI extends javax.swing.JFrame {
         
         this.setTitle("Le Mandelbrot Set");
         this.setResizable(false);
-        this.setSize(480, 480);
+        this.setSize(1000, 1000);
         this.setUndecorated(false); //make sure it has min, max, and close buttons
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 

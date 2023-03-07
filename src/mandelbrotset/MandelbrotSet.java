@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import mandelbrotSet.Complex;
+import mandelbrotset.Fractals;
 
 /**
  *
@@ -41,12 +42,18 @@ class MandelbrotSet {
         double ReMin = -(2/scale)+xoff;
         double ReMax = (2/scale) +xoff;
 
-        int width = 1000;
-        int height = 1000;
+        int width = 480;
+        int height = 480;
         double stepRe = (ReMax - ReMin)/width;
         double stepIm = (ImMax - ImMin)/height;
         int rep = 0;
         int minrep = 1;
+        
+        Color[] colors = {new Color(255,255,255),
+            new Color(114,255,38),
+            new Color(38,177,255),
+            new Color(255,38,64),
+            new Color(0,0,0)};
 
         BufferedImage image = new BufferedImage(width, height+1, BufferedImage.TYPE_INT_RGB);
 while(xoff <3){
@@ -54,20 +61,17 @@ while(xoff <3){
             for (double Re = ReMin; Re < ReMax; Re += stepRe) {
                         color = new Color(255,255,255);
                         image.setRGB((int)((Re-ReMin)/(ReMax-ReMin)*width), (int)((Im-ImMin)/(ImMax-ImMin)*height), color.getRGB() );//work in progress
-                Complex num = new Complex(Re, Im);
-                Complex z = new Complex(0, 0);
-                for (int i = 0; i < repititions; i++) {
-                    z = Complex.multiply(z, z);
-                    z = Complex.add(z, num);
-                    if (i > 2 && z.magnitude() < 2) {
-                        rep = i;
-                    }else if (i > 2){
-                        minrep = i;
-                        break;
-                    }
-                }
+                
+                       
+                    Complex c = new Complex(Re, Im);
+                    Complex z = new Complex(0, 0);
+                    
+                    rep = Fractals.Mandelbrot(z,c, repititions);
+                
+            
                 if (rep > 2){
-                color = new Color((int)(((Math.sin(rep)+1)*255)/2)/(int)(((float)(1+rep/10)/repititions)*255),(int)(((Math.cos(rep+Math.PI/2)+1)*255)/2)/(int)(((float)(1+rep/10)/repititions)*255),(int)(((Math.cos(rep)+1)*255)/2)/(int)(((float)(1+rep/10)/repititions)*255 ));
+                //color = new Color((int)(((Math.sin(rep)+1)*255)/2)/(int)(((float)(1+rep/10)/repititions)*255),(int)(((Math.cos(rep+Math.PI/2)+1)*255)/2)/(int)(((float)(1+rep/10)/repititions)*255),(int)(((Math.cos(rep)+1)*255)/2)/(int)(((float)(1+rep/10)/repititions)*255 ));
+                color = Fractals.gradiant(2, repititions, rep, colors);
                 image.setRGB((int)((Re-ReMin)/(ReMax-ReMin)*width), (int)((Im-ImMin)/(ImMax-ImMin)*height), color.getRGB() );//work in progress
                 }
                 rep = 0;

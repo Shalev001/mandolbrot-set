@@ -34,13 +34,13 @@ public class Fractals {
 
         int rep = 0;
         double averep = 0;
-        double totalDistance = 0;
+        double totalDistance = 0;// variable to store the total distance between each index and the middle of the array
         double distance;
         int totalRep = 0;
-        int[] avereps = new int[samples/2+1];
         for (int x = 0; x < samples; x++) {
             for (int y = 0; y < samples; y++) {
                 for (int i = 0; i < repititions; i++) {
+                    // computeing the number of repititions each subpixel goes through before growing larger than 2
                     z = Complex.multiply(z, z);
                     z = Complex.add(z, new Complex(c.getReal() + x * (stepRe / samples), c.getImaginary() + y * (stepIm / samples)));
                     if (i > 2 && z.magnitude() < 2) {
@@ -49,12 +49,14 @@ public class Fractals {
                         break;
                     }
                 }
+                //computing the distance to the center of the matrix
                 distance = Math.sqrt((x-samples/2)*(x-samples/2)+(y-samples/2)*(y-samples/2));
-                if (distance == 0){
+                if (distance == 0){// avoiding a divition by 0 error
                     distance++;
                 }
-                totalDistance += 1/(distance*distance*distance);
-                averep += 2*(rep*rep)/(distance*distance);
+                
+                totalDistance += 1/(distance*distance*distance); 
+                averep += (rep*rep)/(distance*distance)/2;
                 totalRep += rep;
             }   
         }
@@ -70,10 +72,10 @@ public class Fractals {
             int index = (num - min) / step;
             Color color1 = colors[index];
             Color color2 = colors[index + 1];
-            Color hi = new Color((int) (color1.getRed() + ((color2.getRed() - color1.getRed()) * (((num - min) - index * step) / (float) step))),
+            Color finalColor = new Color((int) (color1.getRed() + ((color2.getRed() - color1.getRed()) * (((num - min) - index * step) / (float) step))),
                     (int) (color1.getGreen() + ((color2.getGreen() - color1.getGreen()) * (((num - min) - index * step) / (float) step))),
                     (int) (color1.getBlue() + ((color2.getBlue() - color1.getBlue()) * (((num - min) - index * step) / (float) step))));
-            return hi;
+            return finalColor;
         } else {
             return colors[colors.length - 1];
         }
@@ -85,10 +87,10 @@ public class Fractals {
             int index = (num - min) / step;
             Color color1 = colors[index];
             Color color2 = colors[index + 1];
-            Color hi = new Color((int) (color1.getRed() + ((color2.getRed() - color1.getRed()) * (((num - min) - index * step) / (float) step) * (((num - min) - index * step) / (float) step))),
+            Color finalColor = new Color((int) (color1.getRed() + ((color2.getRed() - color1.getRed()) * (((num - min) - index * step) / (float) step) * (((num - min) - index * step) / (float) step))),
                     (int) (color1.getGreen() + ((color2.getGreen() - color1.getGreen()) * (((num - min) - index * step) / (float) step) * (((num - min) - index * step) / (float) step))),
                     (int) (color1.getBlue() + ((color2.getBlue() - color1.getBlue()) * (((num - min) - index * step) / (float) step) * (((num - min) - index * step) / (float) step))));
-            return hi;
+            return finalColor;
         } else {
             return colors[colors.length - 1];
         }

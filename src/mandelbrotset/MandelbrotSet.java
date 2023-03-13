@@ -1,6 +1,8 @@
 package mandelbrotset;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,13 +15,15 @@ import mandelbrotset.Fractals;
  *
  * @author shale
  */
-class MandelbrotSet {
+class MandelbrotSet{
+    
+    
 
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException{
         
         //The panel to display it on
         MainFrameUI theFrame;
@@ -36,22 +40,30 @@ class MandelbrotSet {
         int repititions = 500;
         int repMin;
 
+        
+        double scale = 50;
+        
         double xoff = -0.74132652;
         double yoff = -0.23506;
-        double scale = 1;
 
         double ImMin = -(2/scale)+yoff;
         double ImMax = (2/scale) +yoff;
         double ReMin = -(2/scale)+xoff;
         double ReMax = (2/scale) +xoff;
+        
+        
 
         int width = 480;
         int height = 480;
-        double stepRe = (ReMax - ReMin)/width;
-        double stepIm = (ImMax - ImMin)/height;
+        
         int rep = 0;
         
-        int threadnum = 20;
+        
+    
+        double stepRe = (ReMax - ReMin)/width;
+        double stepIm = (ImMax - ImMin)/height;
+        
+        int threadnum = 8;
         Multithread[] threads = new Multithread[threadnum];
  
         
@@ -62,11 +74,13 @@ class MandelbrotSet {
 
         BufferedImage image = new BufferedImage(width, height+1, BufferedImage.TYPE_INT_RGB);
 while(xoff <4){
-        for (double Im = ImMax; Im > ImMin; Im -= stepIm*threadnum) {
+        for (double Im = ImMin; Im < ImMax; Im += stepIm*threadnum) {
             for(int i = 0; i < threadnum; i++){
+                
                 threads[i] = new Multithread(Im + i*stepIm, stepRe,stepIm,ReMin, ReMax, ImMin, ImMax,
-            image,repititions,width,height,colors,real,imaginary);
+            image,repititions,width,height+1,colors,real,imaginary);
                 threads[i].start();
+                
             }
             for(int i = 0; i < threadnum; i++){
                 threads[i].join();
@@ -105,7 +119,7 @@ while(xoff <4){
         //xoff+=0.05;
         //yoff+=0.05;
         //TimeUnit.MILLISECONDS.sleep(100);
-        scale*= 1.4;
+        scale*= 1;
         ImMin = -(2/scale)+yoff;
         ImMax = (2/scale) +yoff;
         ReMin = -(2/scale)+xoff;
